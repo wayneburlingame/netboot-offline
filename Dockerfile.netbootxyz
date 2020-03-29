@@ -1,0 +1,37 @@
+# This file is derived from the project netboot.xyz , and it's under Apache 2.0 license.
+# See netboot.xyz repository for a copy of the license
+
+FROM ubuntu:bionic
+
+RUN \
+ apt-get update && \
+ apt-get install -y \
+	ansible \
+	apache2  \
+	build-essential \
+	dosfstools \
+	genisoimage \
+	git \
+	liblzma-dev \
+	python-minimal \
+	python-yaml \
+	syslinux \
+	binutils-dev \
+	binutils-aarch64-linux-gnu \
+	gcc-aarch64-linux-gnu \
+	figlet \
+	isolinux \
+	toilet && \
+  rm -rf /var/cache/apt/*
+
+# repo for build
+COPY . /ansible
+
+WORKDIR /ansible
+
+# First run for Ansible, needed to generate and build files such as iPXE sources
+RUN ansible-playbook -i inventory site.yml
+
+VOLUME /var/www/html/
+
+CMD [ "/bin/sh", "-c", "ansible-playbook -i inventory site.yml" ]
