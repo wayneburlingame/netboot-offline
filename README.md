@@ -1,5 +1,7 @@
 # Netboot.xyz full offline storage
 
+Project URL: https://gitlab.com/Enrico204/netboot-offline
+
 These bunch of scripts will prepare a full offline copy of [Netboot.xyz](https://github.com/netbootxyz/netboot.xyz/).
 I like `netboot.xyz`, and I prepared this script to have an offline copy when I don't have access to a broadband network
 capable of network booting.
