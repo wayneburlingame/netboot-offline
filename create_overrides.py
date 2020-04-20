@@ -4,13 +4,19 @@ import requests
 import time
 import os.path
 import json
+from nbexceptions import fix_exceptions
 
 
 def disable_all(uocfg, cfg):
+    if "release_overrides" not in uocfg:
+        uocfg["release_overrides"] = {}
+
     ret = "release_overrides:\n"
     for r in cfg["releases"]:
-        ret += "  %s:\n    enabled: false\n" % r
-    return ret
+        if r not in uocfg["release_overrides"]:
+            uocfg["release_overrides"][r] = {}
+        
+        uocfg["release_overrides"][r]["enabled"] = False
 
 
 def replace_all_urls(uocfg, cfg, storageurl):
@@ -53,6 +59,8 @@ if __name__ == '__main__':
 
     if args.disableall:
         disable_all(uocfg, cfg)
+    
+    fix_exceptions(args.root, args.storage)
 
     with open(args.out if args.out is not None else (args.root + "/user_overrides.yml"), "w") as f:
         yaml.dump(uocfg, f, default_flow_style=False)

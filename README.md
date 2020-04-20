@@ -83,5 +83,6 @@ docker build -t netbootbuilder -f /path/to/this/repo/Dockerfile.netbootxyz .
 Then executed as:
 
 ```sh
-docker run --rm -it -v /path/to/netboot.xyz/user_overrides.yml:/ansible/user_overrides.yml -v /path/to/buildout:/var/www/html netbootbuilder
+export NETBOOTXYZ=/path/to/netbootxyz
+docker run --rm -it -v $NETBOOTXYZ/user_overrides.yml:/ansible/user_overrides.yml:ro -v $NETBOOTXYZ/buildout:/var/www/html -v $NETBOOTXYZ/roles:/ansible/roles:ro netbootbuilder
 ```

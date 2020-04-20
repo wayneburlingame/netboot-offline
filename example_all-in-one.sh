@@ -12,13 +12,13 @@ if [ $UID -ne 0 ]; then
     exit 1
 fi
 
-python3 -m http.server --directory ../buildout/ ${PXE_PORT} &
+python3 -m http.server --directory ../netboot.xyz/buildout/ ${PXE_PORT} &
 PXE_PID=$!
 
 python3 -m http.server --directory out/ ${STORAGE_PORT} &
 STORAGE_PID=$!
 
-in.tftpd -L -s -vv ../buildout/ipxe/ &
+in.tftpd -L -s -vv ../netboot.xyz/buildout/ipxe/ &
 TFTP_PID=$!
 
 # TODO: dnsmasq
